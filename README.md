@@ -13,6 +13,7 @@ Have you ever done this?
 I've been in that situation more times than I care to admit. Enter AWSer: A simple Python script that will make your life 95% easier... at least when it comes to SSH'ing into EC2s!
 
 ## Demo
+[![asciicast](https://asciinema.org/a/W9lHWY02nFwfkzSiYOy6RHXH5.svg)](https://asciinema.org/a/W9lHWY02nFwfkzSiYOy6RHXH5)
 
 ## Installation
 1. Download the `awser.py` script and place it in a folder in your path.
