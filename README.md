@@ -23,14 +23,20 @@ I've been in that situation more times than I care to admit. Enter AWSer: A simp
 
 ## Usage
 ```
-usage: a [-h] [--region REGION] keywords [keywords ...]
+usage: awser.py [-h] [-r REGION] [-u USER] [-i IDENTITY]
+                keywords [keywords ...]
 
 Quickly SSH to EC2 instances by name
 
 positional arguments:
-  keywords         keyword(s) to filter list of servers, i.e. 'core 21a'
+  keywords              Keyword(s) to filter list of servers, i.e. 'core 21a'
 
 optional arguments:
-  -h, --help       show this help message and exit
-  --region REGION  overrides the default region
+  -h, --help            show this help message and exit
+  -r REGION, --region REGION
+                        Overrides the default AWS region.
+  -u USER, --user USER  Specifies a user for SSH.
+  -i IDENTITY, --identity IDENTITY
+                        Selects a file from which the identity (private key)
+                        is read.
 ```
