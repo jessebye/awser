@@ -32,6 +32,9 @@ def parse_args():
         help="Overrides the default AWS region.")
 
     parser.add_argument(
+        '-p', '--profile', default=None, help="Specifies which profile to use.")
+
+    parser.add_argument(
         '-u', '--user', default=None, help="Specifies a user for SSH.")
 
     parser.add_argument(
@@ -89,6 +92,9 @@ def main():
     """Main function
     """
     args = parse_args()
+
+    if args.profile:
+        boto3.setup_default_session(profile_name=args.profile)
 
     name_filter = "*"
     for a in args.keywords:
