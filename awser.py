@@ -63,7 +63,7 @@ def get_hosts(name_filter, region):
     for r in response['Reservations']:
         for i in r['Instances']:
             hosts.append([
-                i['PrivateIpAddress'],
+                i['PublicDnsName'],
                 next(x['Value'] for x in i['Tags'] if x['Key'] == 'Name')
             ])
     return hosts
