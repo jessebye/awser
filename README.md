@@ -40,4 +40,5 @@ optional arguments:
   -i IDENTITY, --identity IDENTITY
                         Selects a file from which the identity (private key)
                         is read.
+  -d, --public-dns      Use public DNS name instead of IP address to connect.
 ```
