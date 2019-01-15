@@ -43,6 +43,12 @@ def parse_args():
         default=None,
         help="Selects a file from which the identity (private key) is read.")
 
+    parser.add_argument(
+        '-d',
+        '--public-dns',
+        action='store_true',
+        help="Use public DNS name instead of IP address to connect.")
+
     return parser.parse_args()
 
 
@@ -63,7 +69,7 @@ def get_hosts(name_filter, region):
     for r in response['Reservations']:
         for i in r['Instances']:
             hosts.append([
-                i['PublicDnsName'],
+                i,
                 next(x['Value'] for x in i['Tags'] if x['Key'] == 'Name')
             ])
     return hosts
@@ -105,14 +111,18 @@ def main():
     if not hosts:
         sys.exit("No hosts found matching those keywords.")
 
+    host_name_key = 'PrivateIpAddress'
+    if args.public_dns:
+        host_name_key = 'PublicDnsName'
+
     if len(hosts) == 1:
         print("Logging in to %s..." % hosts[0][1])
-        ssh(hosts[0][0], args.user, args.identity)
+        ssh(hosts[0][0][host_name_key], args.user, args.identity)
     else:
         choice = None
 
         for i, host in enumerate(hosts, 1):
-            print("{0}) {1} - {2}".format(i, host[1], host[0]))
+            print("{0}) {1} - {2}".format(i, host[1], host[0][host_name_key]))
         print("Enter) exit")
 
         try:
@@ -124,7 +134,7 @@ def main():
             sys.exit("You chose... poorly")
         else:
             print("Logging in to %s..." % hosts[choice - 1][1])
-            ssh(hosts[choice - 1][0], args.user, args.identity)
+            ssh(hosts[choice - 1][0][host_name_key], args.user, args.identity)
 
 
 if __name__ == "__main__":
