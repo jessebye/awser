@@ -42,3 +42,21 @@ optional arguments:
                         is read.
   -d, --public-dns      Use public DNS name instead of IP address to connect.
 ```
+
+## Bash Alternative
+Don't want to use Python? Try this little Bash alternative:
+```bash
+function awser() {
+    if [[ ! $1 ]]; then
+        echo "Must provide a search term, i.e. 'trading'."
+        return 1
+    fi
+    local instances=$(aws ec2 describe-instances --filter Name=tag:Name,Values="*$1*" --query 'Reservations[].Instances[].{Name:Tags[?Key==`Name`].Value,IP:PrivateIpAddress}')
+    local instance=$(echo "$instances" | jq '.[] | (.Name | .[]) + ": " + .IP' | sed 's/"//g' | fzf -1 -0 --header "Select an instance" | awk -F": " '{print $2}')
+    if [[ $instance ]]; then
+        ssh -o StrictHostKeyChecking=no -o ConnectTimeout=10 $instance
+    else
+        echo "No match found! Please check the term you provided."
+    fi
+}
+```
