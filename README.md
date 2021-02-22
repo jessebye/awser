@@ -44,7 +44,7 @@ optional arguments:
 ```
 
 ## Bash Alternative
-Don't want to use Python? Try this little Bash alternative (requires `fzf` to be installed):
+Don't want to use Python? Try this little Bash alternative (requires `fzf` and `jq` to be installed):
 ```bash
 function awser() {
     if [[ ! $1 ]]; then
